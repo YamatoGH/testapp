@@ -1,0 +1,25 @@
+{% extends "testapp/base.html" %}
+
+{% block title %}Create Test{% endblock %}
+
+{% block content %}
+<h1>Create a New Test</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div id="word-forms">
+        {{ word_formset.management_form }}
+        {% for word_form in word_formset %}
+            <div class="word-form">
+                {{ word_form.word.label_tag }} {{ word_form.word }}
+                {{ word_form.meaning.label_tag }} {{ word_form.meaning }}
+            </div>
+        {% endfor %}
+    </div>
+    <button type="button" id="add-word" class="btn btn-add-words"><i class="fas fa-plus"></i> Add Word</button>
+    <button type="submit" class="btn btn-create">Create Test</button>
+</form>
+<a href="{% url 'home' %}" class="btn btn-custom"><i class="fas fa-arrow-left"></i> Back to tests</a>
+
+
+{% endblock %}

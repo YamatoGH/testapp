@@ -1,0 +1,20 @@
+{% extends "testapp/base.html" %}
+
+{% block title %}{{ group.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ group.name }}</h1>
+
+{% if tests %}
+    <h2>Tests</h2>
+    <ul>
+        {% for test in tests %}
+            <li>{{ test.name }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No tests available in this group.</p>
+{% endif %}
+
+<a href="{% url 'home' %}" class="btn btn-custom"><i class="fas fa-arrow-left"></i> Back to Home</a>
+{% endblock %}

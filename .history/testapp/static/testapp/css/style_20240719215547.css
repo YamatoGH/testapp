@@ -1,0 +1,122 @@
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #f0f8ff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    background-image: url('/static/testapp/images/background.jpg'); /* ここに背景画像のURLを入力 */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* 背景画像を固定 */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #ffcccb;
+    padding: 20px;
+    text-align: center;
+    font-size: 2em;
+    color: #333;
+}
+
+nav {
+    background-color: #ffa07a;
+    padding: 10px;
+    text-align: center;
+}
+
+nav a {
+    margin: 0 15px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    flex: 1;  /* Main content will take all available space */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 1.0);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 60px;  /* Add some space at the bottom to avoid overlap with the footer */
+}
+
+footer {
+    background-color: #ffcccb;
+    padding: 5px;  /* Adjusted padding */
+    text-align: center;
+    font-size: 0.8em;  /* Adjusted font size */
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+.btn-custom {
+    background-color: #ffa07a;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.btn-custom:hover {
+    background-color: white;
+    color: black;
+    border: 2px solid #ffa07a;
+}
+
+.collapsible {
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 1em;
+}
+
+.active, .collapsible:hover {
+    background-color: #ddd;
+}
+
+.collapsible-content {
+    display: none;
+    overflow: hidden;
+    padding: 0 10px;
+}
+
+.all-tests-button, .create-test-button {
+    position: fixed;
+    bottom: 20px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease;
+}
+
+.all-tests-button:hover, .create-test-button:hover {
+    background-color: #0056b3;
+}
+
+.all-tests-button {
+    right: 20px;
+}
+
+.create-test-button {
+    right: 189.5px; /* Adjust as needed */
+}

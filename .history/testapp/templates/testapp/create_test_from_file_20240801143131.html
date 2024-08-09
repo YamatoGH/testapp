@@ -1,0 +1,14 @@
+{% extends "testapp/base.html" %}
+
+{% block title %}Create Test{% endblock %}
+
+{% block content %}
+<h1>Create a New Test from File</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-create">Create Test</button>
+</form>
+<br/>
+<a href="{% url 'home' %}" class="btn btn-custom"><i class="fas fa-arrow-left"></i> Back to tests</a>
+{% endblock %}

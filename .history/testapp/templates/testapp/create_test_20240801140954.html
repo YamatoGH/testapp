@@ -1,0 +1,17 @@
+{% extends "testapp/base.html" %}
+
+{% block title %}Create Test{% endblock %}
+
+{% block content %}
+<h1>Create a New Test</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {{ formset.management_form }}
+        {% for form in formset %}
+            {{ form.as_p }}
+        {% endfor %}
+        <button type="submit">Create Test</button>
+    </form>
+    <a href="{% url 'quiz:home' %}">Back to Home</a>
+{% endblock %}

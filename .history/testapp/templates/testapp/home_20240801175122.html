@@ -1,0 +1,28 @@
+{% extends "testapp/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Home</h1>
+
+{% if groups %}
+    <h2>Groups</h2>
+    <ul>
+        {% for group in groups %}
+            <li><a href="{% url 'group_tests' group.pk %}">{{ group.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No groups available.</p>
+{% endif %}
+
+<div class="fixed-buttons">
+    <a href="/students/" class="btn btn-custom view-all-students-button"><i class="fas fa-users"></i> View All Students</a>
+    <a href="/all-tests/" class="btn btn-custom all-tests-button"><i class="fas fa-list"></i> View All Tests</a>
+    <a href="/create-test-from-file/" class="btn btn-custom create-test-button"><i class="fas fa-plus"></i> Create New Test</a>
+</div>
+{% endblock %}
+
+
+
+

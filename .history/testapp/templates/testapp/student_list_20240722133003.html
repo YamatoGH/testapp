@@ -1,0 +1,28 @@
+{% extends "testapp/base.html" %}
+
+{% block title %}Student List{% endblock %}
+
+{% block content %}
+<h1>Student List</h1>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+        <tr>
+            <td>{{ student.name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Add New Student</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-custom"><i class="fas fa-save"></i> Save</button>
+</form>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "testapp/base.html" %}
+
+{% block title %}Upload PDF{% endblock %}
+
+{% block content %}
+<h1>Upload PDF for {{ test.title }}</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-custom"><i class="fas fa-upload"></i> Upload</button>
+</form>
+<a href="{% url 'test_detail' test.pk %}" class="btn btn-custom"><i class="fas fa-arrow-left"></i> Back to Test</a>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "your_app/base.html" %}
+
+{% block title %}Create Test{% endblock %}
+
+{% block content %}
+<h1>Create a New Test</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div id="word-forms">
+        {{ word_formset.management_form }}
+        {% for word_form in word_formset %}
+            <div class="word-form">
+                {{ word_form.word.label_tag }} {{ word_form.word }}
+                {{ word_form.meaning.label_tag }} {{ word_form.meaning }}
+            </div>
+        {% endfor %}
+    </div>
+    <button type="button" id="add-word" class="btn btn-add-words"><i class="fas fa-plus"></i> Add Word</button>
+    <button type="submit" class="btn btn-create">Create Test</button>
+</form>
+<a href="{% url 'home' %}" class="btn btn-custom"><i class="fas fa-arrow-left"></i> Back to tests</a>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let formIndex = {{ word_formset.total_form_count|default_if_none:"0" }};
+    const addButton = document.getElementById('add-word');
+    const wordFormsDiv = document.getElementById('word-forms');
+
+    addButton.addEventListener('click', function() {
+        const newForm = document.createElement('div');
+        newForm.classList.add('word-form');
+        newForm.innerHTML = `
+            <label for="id_words-${formIndex}-word">Word:</label>
+            <input type="text" name="words-${formIndex}-word" maxlength="100" required id="id_words-${formIndex}-word">
+            <label for="id_words-${formIndex}-meaning">Meaning:</label>
+            <input type="text" name="words-${formIndex}-meaning" maxlength="255" required id="id_words-${formIndex}-meaning">
+            <button type="button" class="btn btn-danger remove-word"><i class="fas fa-minus"></i> Remove</button>
+        `;
+        wordFormsDiv.appendChild(newForm);
+        formIndex++;
+
+        newForm.querySelector('.remove-word').addEventListener('click', function() {
+            newForm.remove();
+        });
+    });
+
+    // フォームの送信イベントをカスタムする
+    document.querySelector('form').addEventListener('submit', function(event) {
+        const wordsData = [];
+        document.querySelectorAll('.word-form').forEach(function(form) {
+            const wordInput = form.querySelector('input[name^="words-"][name$="-word"]');
+            const meaningInput = form.querySelector('input[name^="words-"][name$="-meaning"]');
+            if (wordInput && meaningInput) {
+                const word = wordInput.value;
+                const meaning = meaningInput.value;
+                if (word && meaning) {
+                    wordsData.push({word: word, meaning: meaning});
+                }
+            }
+        });
+
+        // デバッグ用にコンソールに出力
+        console.log(wordsData);
+
+        // サーバーに送信するデータ形式に変換
+        const wordsField = document.createElement('input');
+        wordsField.type = 'hidden';
+        wordsField.name = 'words_data';
+        wordsField.value = JSON.stringify(wordsData);
+        this.appendChild(wordsField);
+    });
+});
+</script>
+{% endblock %}

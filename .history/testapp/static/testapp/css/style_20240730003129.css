@@ -1,0 +1,9 @@
+.form-group {
+    display: flex;
+    align-items: center;
+}
+
+.form-group button,
+.form-group .btn-custom {
+    margin-left: 10px;
+}

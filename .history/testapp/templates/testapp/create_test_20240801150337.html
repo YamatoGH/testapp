@@ -1,0 +1,49 @@
+{% extends "your_app/base.html" %}
+
+{% block title %}Create Test{% endblock %}
+
+{% block content %}
+<h1>Create a New Test</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div id="word-forms">
+        {{ word_formset.management_form }}
+        {% for word_form in word_formset %}
+            <div class="word-form">
+                {{ word_form.word.label_tag }} {{ word_form.word }}
+                {{ word_form.meaning.label_tag }} {{ word_form.meaning }}
+            </div>
+        {% endfor %}
+    </div>
+    <button type="button" id="add-word" class="btn btn-add-words"><i class="fas fa-plus"></i> Add Word</button>
+    <button type="submit" class="btn btn-create">Create Test</button>
+</form>
+<a href="{% url 'home' %}" class="btn btn-custom"><i class="fas fa-arrow-left"></i> Back to tests</a>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let formIndex = {{ word_formset.total_form_count }};
+    const addButton = document.getElementById('add-word');
+    const wordFormsDiv = document.getElementById('word-forms');
+
+    addButton.addEventListener('click', function() {
+        const newForm = document.createElement('div');
+        newForm.classList.add('word-form');
+        newForm.innerHTML = `
+            <label for="id_words-${formIndex}-word">Word:</label>
+            <input type="text" name="words-${formIndex}-word" maxlength="100" required id="id_words-${formIndex}-word">
+            <label for="id_words-${formIndex}-meaning">Meaning:</label>
+            <input type="text" name="words-${formIndex}-meaning" maxlength="255" required id="id_words-${formIndex}-meaning">
+            <button type="button" class="btn btn-danger remove-word"><i class="fas fa-minus"></i> Remove</button>
+        `;
+        wordFormsDiv.appendChild(newForm);
+        formIndex++;
+
+        newForm.querySelector('.remove-word').addEventListener('click', function() {
+            newForm.remove();
+        });
+    });
+});
+</script>
+{% endblock %}

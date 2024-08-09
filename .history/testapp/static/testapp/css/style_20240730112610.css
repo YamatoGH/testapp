@@ -1,0 +1,188 @@
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #f0f8ff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    background-image: url('/static/testapp/images/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #ffcccb;
+    padding: 20px;
+    text-align: center;
+    font-size: 2em;
+    color: #333;
+}
+
+nav {
+    background-color: #ffa07a;
+    padding: 10px;
+    text-align: center;
+}
+
+nav a {
+    margin: 0 15px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    flex: 1;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 1.0);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 60px;
+}
+
+footer {
+    background-color: #ffcccb;
+    padding: 5px;
+    text-align: center;
+    font-size: 0.8em;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+form .btn-save {
+    background-color: #28a745 !important;
+    color: white !important;
+    padding: 10px 20px !important;
+    border: none !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    font-size: 16px !important;
+    margin: 4px 2px !important;
+    transition-duration: 0.4s !important;
+    cursor: pointer !important;
+}
+
+form .btn-save:hover {
+    background-color: white !important;
+    color: black !important;
+    border: 2px solid #28a745 !important;
+}
+
+form .btn-print {
+    background-color: #87CEEB !important;
+    color: white !important;
+    padding: 10px 20px !important;
+    border: none !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    font-size: 16px !important;
+    margin: 4px 2px !important;
+    transition-duration: 0.4s !important;
+    cursor: pointer !important;
+}
+
+form .btn-print:hover {
+    background-color: white !important;
+    color: black !important;
+    border: 2px solid #87CEEB !important;
+}
+
+.btn-custom {
+    background-color: #ffa07a !important;
+    color: white !important;
+    padding: 8px 12px !important;
+    border: none !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    font-size: 16px !important;
+    margin: 0 !important;
+    transition-duration: 0.4s !important;
+    cursor: pointer !important;
+    border-radius: 0.25rem !important; /* Bootstrapのデフォルトと一致させる */
+}
+
+.btn-custom:hover {
+    background-color: white !important;
+    color: black !important;
+    border: 2px solid #ffa07a !important;
+}
+
+
+.collapsible {
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 1em;
+}
+
+.active, .collapsible:hover {
+    background-color: #ddd;
+}
+
+.collapsible-content {
+    display: none;
+    overflow: hidden;
+    padding: 0 10px;
+}
+
+.fixed-buttons {
+    position: fixed !important;
+    bottom: 29px !important;
+    right: 0px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 0 !important;
+    align-items: center !important;
+    z-index: 1000 !important;
+    padding: 0 !important;
+}
+
+.fixed-buttons .btn-custom {
+    background-color: #007bff !important;
+    color: white !important;
+    padding: 8px 12px !important;
+    border-radius: 5px !important;
+    text-decoration: none !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.fixed-buttons .btn-custom:hover {
+    background-color: #0056b3 !important;
+}
+
+.view-all-students-button,
+.all-tests-button,
+.create-test-button {
+    margin: 0 !important;
+}
+
+.form-group {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.form-group button,
+.form-group .btn-custom {
+    margin-left: 10px !important;
+}
+
+.note-field {
+    width: 100%;
+    max-width: 400px; /* 必要に応じて調整 */
+    height: 200px;
+}

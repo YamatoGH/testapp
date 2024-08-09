@@ -1,0 +1,16 @@
+{% extends "testapp/base.html" %}
+
+{% block title %}Student Detail{% endblock %}
+
+{% block content %}
+<h1>Student Detail: {{ student.name }}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div>
+        <label>前回: {{ student.last_index }}</label>
+    </div>
+    <button type="submit" class="btn btn-custom"><i class="fas fa-save"></i> Save</button>
+</form>
+<a href="{% url 'student_list' %}" class="btn btn-custom"><i class="fas fa-arrow-left"></i> Back to Student List</a>
+{% endblock %}

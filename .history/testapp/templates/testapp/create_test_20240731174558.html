@@ -1,0 +1,88 @@
+{% extends "testapp/base.html" %}
+
+{% block title %}Create Test{% endblock %}
+
+{% block content %}
+<h1>Create a New Test</h1>
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div id="word-forms">
+        <input type="hidden" name="words" id="id_words">
+        {{ formset.management_form }}
+        {% for word_form in formset %}
+            <div class="word-form">
+                {{ word_form.word.label_tag }} {{ word_form.word }}
+                {{ word_form.meaning.label_tag }} {{ word_form.meaning }}
+                <button type="button" class="btn btn-danger remove-word"><i class="fas fa-minus"></i> Remove</button>
+            </div>
+        {% endfor %}
+    </div>
+    <button type="button" id="add-word" class="btn btn-add-words"><i class="fas fa-plus"></i> Add Word</button>
+    <button type="submit" class="btn btn-create">Create Test</button>
+</form>
+
+<br/>
+<br/>
+<a href="{% url 'home' %}" class="btn btn-custom"><i class="fas fa-arrow-left"></i> Back to tests</a>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var formIndex = parseInt('{{ formset.total_form_count }}', 10) || 0;
+    var addButton = document.getElementById('add-word');
+    var wordFormsDiv = document.getElementById('word-forms');
+
+    // Add Word Button Click Event
+    addButton.addEventListener('click', function() {
+        var newForm = document.createElement('div');
+        newForm.classList.add('word-form');
+        newForm.innerHTML = `
+            <label for="id_words-${formIndex}-word">Word:</label>
+            <input type="text" name="words-${formIndex}-word" maxlength="100" required id="id_words-${formIndex}-word">
+            <label for="id_words-${formIndex}-meaning">Meaning:</label>
+            <input type="text" name="words-${formIndex}-meaning" maxlength="255" required id="id_words-${formIndex}-meaning">
+            <button type="button" class="btn btn-danger remove-word"><i class="fas fa-minus"></i> Remove</button>
+        `;
+        wordFormsDiv.appendChild(newForm);
+        formIndex++;
+
+        // Update TOTAL_FORMS
+        document.querySelector('#id_words-TOTAL_FORMS').value = formIndex;
+
+        // Add Remove Event
+        newForm.querySelector('.remove-word').addEventListener('click', function() {
+            newForm.remove();
+            formIndex--;
+            document.querySelector('#id_words-TOTAL_FORMS').value = formIndex;
+        });
+    });
+
+    // Add Remove Event to Existing Forms
+    document.querySelectorAll('.remove-word').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.target.closest('.word-form').remove();
+            formIndex--;
+            document.querySelector('#id_words-TOTAL_FORMS').value = formIndex;
+        });
+    });
+
+    // Form submit event to collect words data
+    document.querySelector('form').addEventListener('submit', function() {
+        var wordsData = [];
+        document.querySelectorAll('.word-form').forEach(function(form) {
+            var word = form.querySelector('input[name^="words-"][name$="-word"]').value;
+            var meaning = form.querySelector('input[name^="words-"][name$="-meaning"]').value;
+            wordsData.push(word + ':' + meaning);
+        });
+        document.getElementById('id_words').value = wordsData.join(',');
+    });
+});
+</script>
+{% endblock %}

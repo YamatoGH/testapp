@@ -1,0 +1,94 @@
+<!-- student_detail.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Detail</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'testapp/css/style.css' %}">
+</head>
+<body>
+    <header>
+        <i class="fas fa-book"></i> English Vocabulary Test
+    </header>
+    <nav>
+        <a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a>
+    </nav>
+    <div class="container">
+        {% if messages %}
+            <div id="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <h1>Student Detail: {{ student.name }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="note-field" style="margin-left: auto;">
+                {{ form.note.label_tag }}{{ form.note|safe }}
+            </div>
+            <div class="form-group">
+                {{ form.name.label_tag }}{{ form.name }}
+            </div>
+            <div class="form-group">
+                {{ form.test_group.label_tag }}{{ form.test_group }}
+            </div>
+            <div class="form-group">
+                {{ form.current_test.label_tag }}{{ form.current_test }}
+            </div>
+            <div class="form-group">
+                {{ form.start_index.label_tag }}{{ form.start_index }}
+                <span>前回: {{ student.start_index }}～{{ student.last_index }} ({{ student.last_saved|date:"Y-m-d" }})</span>
+            </div>
+            <div class="form-group">
+                {{ form.last_index.label_tag }}{{ form.last_index }}
+            </div>
+            <div class="form-group">
+                {{ form.shuffle.label_tag }}{{ form.shuffle }}
+            </div>
+            <button type="submit" class="btn btn-save"><i class="fas fa-save"></i> Save</button>
+            <button type="submit" name="print" class="btn btn-print"><i class="fas fa-print"></i> Print Current Test</button>
+        </form>
+
+        
+        <a href="{% url 'student_list' %}" class="btn btn-custom"><i class="fas fa-arrow-left"></i> Back to Student List</a>
+    </div>
+    <footer>
+        © 2023 English Vocabulary Test
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var coll = document.getElementsByClassName("collapsible");
+            for (var i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                        content.style.display = "none";
+                    } else {
+                        content.style.display = "block";
+                    }
+                });
+            }
+        });
+
+        // メッセージを数秒間表示して自動的にフェードアウトする
+        setTimeout(function() {
+            var messages = document.getElementById('messages');
+            if (messages) {
+                messages.style.transition = 'opacity 0.5s ease-out';
+                messages.style.opacity = '0';
+                setTimeout(function() {
+                    messages.style.display = 'none';
+                }, 500);
+            }
+        }, 3000); // 3秒後にフェードアウト開始
+    </script>
+</body>
+</html>

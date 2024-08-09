@@ -1,0 +1,15 @@
+{% extends "testapp/base.html" %}
+
+{% block title %}Add Student{% endblock %}
+
+{% block content %}
+<h1>Add New Student</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn-green "><i class="fas fa-save"></i> Save</button>
+</form>
+</br>
+
+<a href="{% url 'home' %}" class="btn btn-custom"><i class="fas fa-arrow-left"></i> Back to Home</a>
+{% endblock %}

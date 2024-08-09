@@ -1,0 +1,81 @@
+{% extends "testapp/base.html" %}
+
+{% block title %}{{ test.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ test.title }}</h1>
+<p>{{ test.description }}</p>
+{% if test.pdf %}
+    <embed src="{{ test.pdf.url }}" width="600" height="500" type="application/pdf">
+{% else %}
+    <button type="button" class="collapsible">Show/Hide Words</button>
+    <div class="collapsible-content">
+        <table>
+            <tr>
+                <th>#</th> <!-- インデックス番号のカラム -->
+                <th>Word</th>
+                <th>Meaning</th>
+            </tr>
+            {% for word in words %}
+            <tr>
+                <td>{{ forloop.counter }}</td> <!-- インデックス番号 -->
+                <td>{{ word.word }}</td>
+                <td>{{ word.meaning }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <a href="{% url 'home' %}" class="btn btn-custom"><i class="fas fa-arrow-left"></i> Back to tests</a>
+
+    <!-- 印刷ページへのリンク -->
+    <form action="{% url 'print_test' test.id 0 10 'no' %}" method="get" style="margin-top: 20px;">
+        <div class="form-group">
+            <label for="start_index">Start Index:</label>
+            <input type="number" id="start_index" name="start_index" class="form-control" value="1" min="1" max="{{ words|length }}">
+        </div>
+        <div class="form-group">
+            <label for="end_index">End Index:</label>
+            <input type="number" id="end_index" name="end_index" class="form-control" value="10" min="1" max="{{ words|length }}">
+        </div>
+        <div class="form-group">
+            <label for="shuffle">Shuffle Words:</label>
+            <select id="shuffle" name="shuffle" class="form-control">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-custom"><i class="fas fa-print"></i> Print Test</button>
+    </form>
+
+    <!-- 回答付き印刷ページへのリンク -->
+    <form action="{% url 'print_test_with_answers' test.id 0 10 'no' %}" method="get" style="margin-top: 20px;">
+        <div class="form-group">
+            <label for="start_index">Start Index:</label>
+            <input type="number" id="start_index" name="start_index" class="form-control" value="1" min="1" max="{{ words|length }}">
+        </div>
+        <div class="form-group">
+            <label for="end_index">End Index:</label>
+            <input type="number" id="end_index" name="end_index" class="form-control" value="10" min="1" max="{{ words|length }}">
+        </div>
+        <div class="form-group">
+            <label for="shuffle">Shuffle Words:</label>
+            <select id="shuffle" name="shuffle" class="form-control">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-custom"><i class="fas fa-print"></i> Print Test with Answers</button>
+    </form>
+{% endif %}
+<script>
+document.querySelectorAll('form').forEach(function(form) {
+    form.addEventListener('submit', function(event) {
+        var start_index = form.querySelector('#start_index').value;
+        var end_index = form.querySelector('#end_index').value;
+        var shuffle = form.querySelector('#shuffle').value;
+        var adjusted_start_index = Math.max(start_index - 1, 0);  // start_indexが0未満にならないように調整
+        form.action = form.action.replace('0/10/no', adjusted_start_index + '/' + end_index + '/' + shuffle);
+    });
+});
+</script>
+{% endblock %}

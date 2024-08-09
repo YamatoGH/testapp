@@ -1,0 +1,38 @@
+{% extends "testapp/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Vocabulary Test Groups</h1>
+    {% for group, tests in group_tests.items %}
+    <h2>{{ group.name }}</h2>
+    {% if tests %}
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Test Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for test in tests %}
+            <tr>
+                <td>{{ test.name }}</td>
+                <td><a href="{% url 'test_detail' test.id %}" class="btn btn-custom"><i class="fas fa-eye"></i> View</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No tests available in this group.</p>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<div class="fixed-buttons">
+    <a href="/students/" class="btn btn-custom view-all-students-button"><i class="fas fa-users"></i> View All Students</a>
+    <a href="/all-tests/" class="btn btn-custom all-tests-button"><i class="fas fa-list"></i> View All Tests</a>
+    <a href="/create-test-from-file/" class="btn btn-custom create-test-button"><i class="fas fa-plus"></i> Create New Test</a>
+</div>
+{% endblock %}

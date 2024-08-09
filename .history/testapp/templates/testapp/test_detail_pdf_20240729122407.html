@@ -1,0 +1,10 @@
+{% extends "testapp/base.html" %}
+
+{% block title %}{{ test.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ test.title }}</h1>
+<p>{{ test.description }}</p>
+<embed src="{{ test.pdf.url }}" width="600" height="500" type="application/pdf">
+<a href="{% url 'home' %}" class="btn btn-custom"><i class="fas fa-arrow-left"></i> Back to tests</a>
+{% endblock %}
