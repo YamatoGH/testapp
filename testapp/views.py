@@ -49,17 +49,17 @@ def all_tests(request):
 def print_test(request, pk, start_index, end_index, shuffle):
     test = get_object_or_404(Test, pk=pk)
     words = list(test.words.all())
+    words = words[start_index:end_index]
     if shuffle == 'yes':
         random.shuffle(words)
-    words = words[start_index:end_index]
     return render(request, 'testapp/print_test.html', {'test': test, 'words': words})
 
 def print_test_with_answers(request, pk, start_index, end_index, shuffle):
     test = get_object_or_404(Test, pk=pk)
     words = list(test.words.all())
+    words = words[start_index:end_index]
     if shuffle == 'yes':
         random.shuffle(words)
-    words = words[start_index:end_index]
     return render(request, 'testapp/print_test_with_answers.html', {'test': test, 'words': words})
 
 def add_student(request):
@@ -101,3 +101,4 @@ def group_tests(request, pk):
     group = get_object_or_404(Group, pk=pk)
     tests = group.tests.all()
     return render(request, 'testapp/group_tests.html', {'group': group, 'tests': tests})
+    
